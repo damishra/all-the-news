@@ -45,7 +45,7 @@ require '/var/www/html/vendor/autoload.php';
                     case "New York Times":
                         $this->fetchImage('nyt.png');
                         break;
-                    case "Brietbart":
+                    case "Breitbart":
                         $this->fetchImage('bb.jpg');
                         break;
                     case "CNN":
@@ -92,10 +92,10 @@ require '/var/www/html/vendor/autoload.php';
                 foreach ($row as $key=>$col) {
                     switch ($key) {
                         case "publication":
-                            echo "<h6 class='subtitle is-6'>$col</h6>";
+                            echo "<span class='tag is-dark'>$col</span>";
                             break;
                         case "title":
-                            echo "<h1 class='title is-5'>$col</h1>";
+                            echo "<h1 class='subtitle is-5'>$col</h1>";
                             break;
                         default:
                             break;
@@ -103,6 +103,7 @@ require '/var/www/html/vendor/autoload.php';
                 }
                 echo '</div>';
                 echo "</div>";
+                echo "<br>";
             }
         } catch (Exception $e) {
             die ("Error in fetchArticles()...");
@@ -138,7 +139,7 @@ require '/var/www/html/vendor/autoload.php';
                     case "New York Times":
                         $this->fetchImage('nyt.png');
                         break;
-                    case "Brietbart":
+                    case "Breitbart":
                         $this->fetchImage('bb.jpg');
                         break;
                     case "CNN":
@@ -181,14 +182,14 @@ require '/var/www/html/vendor/autoload.php';
                         $this->fetchImage('wp.png');
                         break;
                 }
-                echo "<div class='is-block' style='margin-left: 1rem;'>";
+                echo "<div class='is-block' style='margin-left: 1rem;  float: right;'>";
                 foreach ($row as $key=>$col) {
                     switch ($key) {
                         case "publication":
-                            echo "<h6 class='subtitle is-6'>$col</h6>";
+                            echo "<span class='tag is-dark'>$col</span>";
                             break;
                         case "title":
-                            echo "<h1 class='title is-5'>$col</h1>";
+                            echo "<h1 class='subtitle is-5'>$col</h1>";
                             break;
                         default:
                             break;
@@ -196,6 +197,8 @@ require '/var/www/html/vendor/autoload.php';
                 }
                 echo "</div>";
                 echo "</div>";
+
+                echo "<br>";
             }
         } catch (Exception $e) {
 
@@ -232,7 +235,7 @@ require '/var/www/html/vendor/autoload.php';
             $cursor = $this->coll->openDownloadStreamByName($filename, ['revision' => -1]);
             $contents = stream_get_contents($cursor);
             $image = base64_encode($contents);
-            echo '<figure class="image is-64x64 has-text-right" style="float: left;"><img class="is-rounded" src="data:jpeg;base64, '.$image.'"></figure>';
+            echo '<figure class="image is-64x64 has-text-right" style="float: left;"><img src="data:jpeg;base64, '.$image.'"></figure>';
         } catch (Exception $e) {
             die ("Error in fetchImages()...");
         }
