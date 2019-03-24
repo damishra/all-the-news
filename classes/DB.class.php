@@ -66,16 +66,16 @@ require '/var/www/html/vendor/autoload.php';
             $cursor = null;
             switch ($type) {
                 case "title":
-                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
+                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 1, 'title' => 1, 'publication' => 1]]);
                     break;
                 case "content":
-                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
+                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 1, 'title' => 1, 'publication' => 1]]);
                     break;
                 case "author":
-                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
+                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 1, 'title' => 1, 'publication' => 1]]);
                     break;
                 case "publication":
-                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
+                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 1, 'title' => 1, 'publication' => 1]]);
                     break;
                 default:
                     header('Location: index.php');
@@ -103,11 +103,19 @@ require '/var/www/html/vendor/autoload.php';
         }
     }
 
-    public function selectArticle() {
+    public function selectArticle($oid) {
         try {
-
+            $this->coll = $this->db->{'articles'};
+            $cursor = $this->coll->find([],['limit' => 100, 'projection' => []]);
+            foreach ($cursor as $row) {
+                echo "<div class=\"box is-block\">";
+                foreach ($row as $key=>$col) {
+                    echo $col . '<br>';
+                }
+                echo "</div>";
+            }
         } catch (Exception $e) {
-
+            die ("Error in selectArticle()...");
         }
     }
 
