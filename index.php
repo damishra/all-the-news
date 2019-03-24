@@ -33,6 +33,7 @@
                                 </p>
                                 <div style="min-height: 10px"></div>
                                 <p>
+                                    <input class="is-hidden" name="type" value="title">
                                     <input type="submit" class="button is-small is-dark" value="search">
                                 </p>
                             </div>

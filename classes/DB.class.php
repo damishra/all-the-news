@@ -77,6 +77,9 @@ require '/var/www/html/vendor/autoload.php';
                 case "publisher":
                     $cursor = $this->coll->find(['title' => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
                     break;
+                default:
+                    header('Location: index.php');
+                    break;
             }
 
             foreach ($cursor as $row) {
@@ -108,9 +111,9 @@ require '/var/www/html/vendor/autoload.php';
         }
     }
 
-    public function fetchComments() {
+    public function fetchComments($oid) {
         try {
-            $this->coll = $this->conn->selecyCollection('newsdata','comments');
+            $this->coll = $this->conn->selectCollection('newsdata','comments');
         } catch (Exception $e) {
             die ("Error in fetchComments()...");
         }
@@ -126,7 +129,7 @@ require '/var/www/html/vendor/autoload.php';
 
     public function storeComment() {
         try {
-
+            $this->coll = $this->conn->selectCollection('newsdata','comments');
         } catch (Exception $e) {
 
         }
