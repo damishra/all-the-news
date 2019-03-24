@@ -14,11 +14,11 @@ body {
     border: 1px solid #555;
 }
 
-.box > .title {
+.box > div > .title {
     color: #eee;
 }
 
-.box > .subtitle {
+.box > div > .subtitle {
     color: #eee;
 }
 

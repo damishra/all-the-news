@@ -40,7 +40,55 @@ require '/var/www/html/vendor/autoload.php';
             $this->coll = $this->db->{'articles'};
             $cursor = $this->coll->find([],['limit' => 100, 'projection' => ['_id' => 1, 'title' => 1, 'publication' => 1]]);
             foreach ($cursor as $row) {
-                echo "<div class=\"box is-block\">";
+                echo "<div class=\"box is-block is-inline-block\">";
+                switch($row['publication']) {
+                    case "New York Times":
+                        $this->fetchImage('nyt.png');
+                        break;
+                    case "Brietbart":
+                        $this->fetchImage('bb.jpg');
+                        break;
+                    case "CNN":
+                        $this->fetchImage('cnn.jpg');
+                        break;
+                    case "Business Insider":
+                        $this->fetchImage('bi.png');
+                        break;
+                    case "Atlantic":
+                        $this->fetchImage('ta.png');
+                        break;
+                    case "Fox News":
+                        $this->fetchImage('fn.png');
+                        break;
+                    case "Talking Points Memo":
+                        $this->fetchImage('tpm.png');
+                        break;
+                    case "Buzzfeed News":
+                        $this->fetchImage('bn.png');
+                        break;
+                    case "National Review":
+                        $this->fetchImage('nr.jpg');
+                        break;
+                    case "New York Post":
+                        $this->fetchImage('nyp.png');
+                        break;
+                    case "Guardian":
+                        $this->fetchImage('tg.png');
+                        break;
+                    case "NPR":
+                        $this->fetchImage('npr.jpg');
+                        break;
+                    case "Reuters":
+                        $this->fetchImage('tr.jpg');
+                        break;
+                    case "Vox":
+                        $this->fetchImage('vox.png');
+                        break;
+                    case "Washington Post":
+                        $this->fetchImage('wp.png');
+                        break;
+                }
+                echo "<div class='is-block' style='margin-left: 1rem; float: right;'>";
                 foreach ($row as $key=>$col) {
                     switch ($key) {
                         case "publication":
@@ -53,6 +101,7 @@ require '/var/www/html/vendor/autoload.php';
                             break;
                     }
                 }
+                echo '</div>';
                 echo "</div>";
             }
         } catch (Exception $e) {
@@ -64,6 +113,7 @@ require '/var/www/html/vendor/autoload.php';
         try {
             $this->coll = $this->db->{'articles'};
             $cursor = null;
+
             switch ($type) {
                 case "title":
                     $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 1, 'title' => 1, 'publication' => 1]]);
@@ -83,7 +133,55 @@ require '/var/www/html/vendor/autoload.php';
             }
 
             foreach ($cursor as $row) {
-                echo "<div class=\"box is-block\">";
+                echo "<div class=\"box is-block is-inline-block\">";
+                switch($row['publication']) {
+                    case "New York Times":
+                        $this->fetchImage('nyt.png');
+                        break;
+                    case "Brietbart":
+                        $this->fetchImage('bb.jpg');
+                        break;
+                    case "CNN":
+                        $this->fetchImage('cnn.jpg');
+                        break;
+                    case "Business Insider":
+                        $this->fetchImage('bi.png');
+                        break;
+                    case "Atlantic":
+                        $this->fetchImage('ta.png');
+                        break;
+                    case "Fox News":
+                        $this->fetchImage('fn.png');
+                        break;
+                    case "Talking Points Memo":
+                        $this->fetchImage('tpm.png');
+                        break;
+                    case "Buzzfeed News":
+                        $this->fetchImage('bn.png');
+                        break;
+                    case "National Review":
+                        $this->fetchImage('nr.jpg');
+                        break;
+                    case "New York Post":
+                        $this->fetchImage('nyp.png');
+                        break;
+                    case "Guardian":
+                        $this->fetchImage('tg.png');
+                        break;
+                    case "NPR":
+                        $this->fetchImage('npr.jpg');
+                        break;
+                    case "Reuters":
+                        $this->fetchImage('tr.jpg');
+                        break;
+                    case "Vox":
+                        $this->fetchImage('vox.png');
+                        break;
+                    case "Washington Post":
+                        $this->fetchImage('wp.png');
+                        break;
+                }
+                echo "<div class='is-block' style='margin-left: 1rem;'>";
                 foreach ($row as $key=>$col) {
                     switch ($key) {
                         case "publication":
@@ -96,6 +194,7 @@ require '/var/www/html/vendor/autoload.php';
                             break;
                     }
                 }
+                echo "</div>";
                 echo "</div>";
             }
         } catch (Exception $e) {
@@ -121,15 +220,19 @@ require '/var/www/html/vendor/autoload.php';
 
     public function fetchComments($oid) {
         try {
-            $this->coll = $this->conn->selectCollection('newsdata','comments');
+            $this->coll = $this->db->selectCollection('newsdata','comments');
         } catch (Exception $e) {
             die ("Error in fetchComments()...");
         }
     }
 
-    public function fetchImage() {
+    public function fetchImage($filename) {
         try {
-            $this->coll = $this->conn->selectCollection('newsdata','articles');
+            $this->coll = $this->db->selectGridFSBucket();
+            $cursor = $this->coll->openDownloadStreamByName($filename, ['revision' => -1]);
+            $contents = stream_get_contents($cursor);
+            $image = base64_encode($contents);
+            echo '<figure class="image is-64x64 has-text-right" style="float: left;"><img class="is-rounded" src="data:jpeg;base64, '.$image.'"></figure>';
         } catch (Exception $e) {
             die ("Error in fetchImages()...");
         }
