@@ -66,16 +66,16 @@ require '/var/www/html/vendor/autoload.php';
             $cursor = null;
             switch ($type) {
                 case "title":
-                    $cursor = $this->coll->find(['title' => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
+                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
                     break;
                 case "content":
-                    $cursor = $this->coll->find(['title' => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
+                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
                     break;
                 case "author":
-                    $cursor = $this->coll->find(['title' => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
+                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
                     break;
-                case "publisher":
-                    $cursor = $this->coll->find(['title' => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
+                case "publication":
+                    $cursor = $this->coll->find([$type => new \MongoDB\BSON\Regex('^.*\b'.$term.'\b.*$', 'i')],['limit' => 1000, 'projection' => ['_id' => 0, 'title' => 1, 'publication' => 1]]);
                     break;
                 default:
                     header('Location: index.php');

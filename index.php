@@ -26,7 +26,7 @@
                             <label class="label" style="color: #eee;">SEARCH</label>
                             <div class="control">
                                 <p class="control has-icons-left has-icons-right">
-                                    <input class="input is-small is" type="text" placeholder="Search Text" name="term">
+                                    <input class="input is-small is" type="text" placeholder="Search Titles" name="term">
                                     <span class="icon is-small is-left">
                                   <i class="fas fa-search"></i>
                                 </span>
@@ -34,6 +34,60 @@
                                 <div style="min-height: 10px"></div>
                                 <p>
                                     <input class="is-hidden" name="type" value="title">
+                                    <input type="submit" class="button is-small is-dark" value="search">
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                    <form method="post" action="./assets/scripts/formAction.php">
+                        <div class="field">
+                            <label class="label" style="color: #eee;">SEARCH</label>
+                            <div class="control">
+                                <p class="control has-icons-left has-icons-right">
+                                    <input class="input is-small is" type="text" placeholder="Search Content" name="term">
+                                    <span class="icon is-small is-left">
+                                  <i class="fas fa-search"></i>
+                                </span>
+                                </p>
+                                <div style="min-height: 10px"></div>
+                                <p>
+                                    <input class="is-hidden" name="type" value="content">
+                                    <input type="submit" class="button is-small is-dark" value="search">
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                    <form method="post" action="./assets/scripts/formAction.php">
+                        <div class="field">
+                            <label class="label" style="color: #eee;">SEARCH</label>
+                            <div class="control">
+                                <p class="control has-icons-left has-icons-right">
+                                    <input class="input is-small is" type="text" placeholder="Search Authors" name="term">
+                                    <span class="icon is-small is-left">
+                                  <i class="fas fa-search"></i>
+                                </span>
+                                </p>
+                                <div style="min-height: 10px"></div>
+                                <p>
+                                    <input class="is-hidden" name="type" value="author">
+                                    <input type="submit" class="button is-small is-dark" value="search">
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                    <form method="post" action="./assets/scripts/formAction.php">
+                        <div class="field">
+                            <label class="label" style="color: #eee;">SEARCH</label>
+                            <div class="control">
+                                <p class="control has-icons-left has-icons-right">
+                                    <input class="input is-small is" type="text" placeholder="Search Publication" name="term">
+                                    <span class="icon is-small is-left">
+                                  <i class="fas fa-search"></i>
+                                </span>
+                                </p>
+                                <div style="min-height: 10px"></div>
+                                <p>
+                                    <input class="is-hidden" name="type" value="publication">
                                     <input type="submit" class="button is-small is-dark" value="search">
                                 </p>
                             </div>
