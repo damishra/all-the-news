@@ -1,18 +1,21 @@
+<?php session_name('atn'); session_start(); ?>
+
 <!doctype html>
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <title>All The News</title>
-    <link rel="stylesheet" href="./../styles/bulma.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/styles/bulma.css">
     <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text" rel="stylesheet">
-    <script defer src="./all.js"></script>
+    <script defer src="assets/scripts/all.js"></script>
 </head>
 <body class="container">
     <br>
     <div class="columns">
-        <div class="column is-one-fifth">
-            <div class="box is-boxed">
+        <aside class="column is-one-fifth">
+            <div>
                 <a class="navbar-content" href="https://dishantmishra.me/all-the-news" style="font-family: 'Libre Barcode 128 Text', 'Helvetica Neue', Helvetica, Arial, serif;">
                     <h1 class="subtitle is-1">All The News!</h1>
                 </a>
@@ -90,10 +93,10 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </aside>
         <div class="allowScroll column is-four-fifths">
             <?php
-                require '../../classes/DB.class.php';
+                require 'classes/DB.class.php';
                 try {
                     $db = new DB();
                     $db->searchArticles($_POST['term'], $_POST['type']);

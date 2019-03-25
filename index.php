@@ -1,9 +1,12 @@
+<?php session_name('atn'); session_start(); ?>
+
 <!doctype html>
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <title>All The News!</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./assets/styles/bulma.css">
     <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text" rel="stylesheet">
     <script defer src="./assets/scripts/all.js"></script>
@@ -11,13 +14,13 @@
 <body class="container">
         <br>
         <div class="columns">
-            <div class="column is-one-fifth">
-                <div class="box is-boxed">
+            <aside class="column is-one-fifth">
+                <div>
                     <a class="navbar-content" href="https://dishantmishra.me/all-the-news" style="font-family: 'Libre Barcode 128 Text', 'Helvetica Neue', Helvetica, Arial, serif; background-color: #222;">
                         <h1 class="subtitle is-1">All The News!</h1>
                     </a>
                     <br>
-                    <form method="post" action="./assets/scripts/formAction.php">
+                    <form method="post" action="search.php">
                         <div class="field">
                             <label class="label">SEARCH</label>
                             <div class="control">
@@ -36,7 +39,7 @@
                         </div>
                     </form>
                     <br>
-                    <form method="post" action="./assets/scripts/formAction.php">
+                    <form method="post" action="search.php">
                         <div class="field">
                             <div class="control">
                                 <p class="control has-icons-left has-icons-right">
@@ -54,7 +57,7 @@
                         </div>
                     </form>
                     <br>
-                    <form method="post" action="./assets/scripts/formAction.php">
+                    <form method="post" action="search.php">
                         <div class="field">
                             <div class="control">
                                 <p class="control has-icons-left has-icons-right">
@@ -72,7 +75,7 @@
                         </div>
                     </form>
                     <br>
-                    <form method="post" action="./assets/scripts/formAction.php">
+                    <form method="post" action="search.php">
                         <div class="field">
                             <div class="control">
                                 <p class="control has-icons-left has-icons-right">
@@ -90,8 +93,8 @@
                         </div>
                     </form>
                 </div>
-            </div>
-            <div class="allowScroll column is-four-fifths">
+            </aside>
+            <div class="column is-four-fifths">
                 <?php
                 require 'classes/DB.class.php';
                 try {

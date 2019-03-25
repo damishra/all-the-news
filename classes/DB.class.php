@@ -38,7 +38,7 @@ require '/var/www/html/vendor/autoload.php';
     public function fetchArticles() {
         try {
             $this->coll = $this->db->{'articles'};
-            $cursor = $this->coll->find([],['limit' => 100, 'projection' => ['_id' => 1, 'title' => 1, 'publication' => 1]]);
+            $cursor = $this->coll->find([],['limit' => 100, 'projection' => ['id' => 1, 'title' => 1, 'publication' => 1]]);
             foreach ($cursor as $row) {
                 echo "<div class=\"box is-block is-inline-block\">";
                 switch($row['publication']) {
@@ -91,8 +91,11 @@ require '/var/www/html/vendor/autoload.php';
                 echo "<div class='is-block' style='margin-left: 1rem; float: right;'>";
                 foreach ($row as $key=>$col) {
                     switch ($key) {
+                        case "_id":
+                            $id = $col;
+                            break;
                         case "publication":
-                            echo "<span class='tag is-dark'>$col</span>";
+                            echo "<h6 class='title is-6'>$col</h6>";
                             break;
                         case "title":
                             echo "<h1 class='subtitle is-5'>$col</h1>";
@@ -101,6 +104,7 @@ require '/var/www/html/vendor/autoload.php';
                             break;
                     }
                 }
+                echo "<br><form method='get' action='content.php'><input name='id' value='". $id ."' class='is-hidden'><input type='submit' value='Select Article' class='button is-black is-small'></form>";
                 echo '</div>';
                 echo "</div>";
                 echo "<br>";
@@ -183,10 +187,14 @@ require '/var/www/html/vendor/autoload.php';
                         break;
                 }
                 echo "<div class='is-block' style='margin-left: 1rem;  float: right;'>";
+                $id = null;
                 foreach ($row as $key=>$col) {
                     switch ($key) {
+                        case "_id":
+                            $id = $col;
+                            break;
                         case "publication":
-                            echo "<span class='tag is-dark'>$col</span>";
+                            echo "<h6 class='title is-6'>$col</h6>";
                             break;
                         case "title":
                             echo "<h1 class='subtitle is-5'>$col</h1>";
@@ -195,6 +203,7 @@ require '/var/www/html/vendor/autoload.php';
                             break;
                     }
                 }
+                echo "<br><form method='get' action='content.php'><input name='id' value='{$id}' class='is-hidden'><input type='submit' value='Select Article' class='button is-black is-small'></form>";
                 echo "</div>";
                 echo "</div>";
 
@@ -206,16 +215,85 @@ require '/var/www/html/vendor/autoload.php';
     }
 
     public function selectArticle($oid) {
-        try {
-            $this->coll = $this->db->{'articles'};
-            $cursor = $this->coll->find([],['limit' => 100, 'projection' => []]);
-            foreach ($cursor as $row) {
-                echo "<div class=\"box is-block\">";
-                foreach ($row as $key=>$col) {
-                    echo $col . '<br>';
+            try {
+                $this->coll = $this->db->{'articles'};
+                $cursor = $this->coll->find(['_id' => new MongoDB\BSON\ObjectId($oid)],['limit' => 100, 'projection' => ['_id' => 1, 'title' => 1, 'publication' => 1, 'date' => 1, 'author' =>1, 'content' => 1]]);
+                foreach ($cursor as $row) {
+                    switch($row['publication']) {
+                        case "New York Times":
+                            $this->fetchImage('nyt.png');
+                            break;
+                        case "Breitbart":
+                            $this->fetchImage('bb.jpg');
+                            break;
+                        case "CNN":
+                            $this->fetchImage('cnn.jpg');
+                            break;
+                        case "Business Insider":
+                            $this->fetchImage('bi.png');
+                            break;
+                        case "Atlantic":
+                            $this->fetchImage('ta.png');
+                            break;
+                        case "Fox News":
+                            $this->fetchImage('fn.png');
+                            break;
+                        case "Talking Points Memo":
+                            $this->fetchImage('tpm.png');
+                            break;
+                        case "Buzzfeed News":
+                            $this->fetchImage('bn.png');
+                            break;
+                        case "National Review":
+                            $this->fetchImage('nr.jpg');
+                            break;
+                        case "New York Post":
+                            $this->fetchImage('nyp.png');
+                            break;
+                        case "Guardian":
+                            $this->fetchImage('tg.png');
+                            break;
+                        case "NPR":
+                            $this->fetchImage('npr.jpg');
+                            break;
+                        case "Reuters":
+                            $this->fetchImage('tr.jpg');
+                            break;
+                        case "Vox":
+                            $this->fetchImage('vox.png');
+                            break;
+                        case "Washington Post":
+                            $this->fetchImage('wp.png');
+                            break;
+                    }
+                    echo "<div class='is-block' style='margin-left: 1rem; float: right;'>";
+                    foreach ($row as $key=>$col) {
+                        switch ($key) {
+                            case "_id":
+                                $id = $col;
+                                break;
+                            case "publication":
+                                echo "<span class='tag is-success'>Publication: $col</span><br>";
+                                break;
+                            case "author":
+                                echo "<span class='tag is-danger'>Author[s]: $col</span><br>";
+                                break;
+                            case "date":
+                                echo "<span class='tag is-black'>Published on: $col</span><br>";
+                                break;
+                            case "content":
+                                echo "<br><p>$col</p>";
+                                break;
+                            case "title":
+                                echo "<h1 class='subtitle is-2'>$col</h1>";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    echo "</div>";
+                    echo "<br>";
                 }
-                echo "</div>";
-            }
         } catch (Exception $e) {
             die ("Error in selectArticle()...");
         }
@@ -223,7 +301,24 @@ require '/var/www/html/vendor/autoload.php';
 
     public function fetchComments($oid) {
         try {
-            $this->coll = $this->db->selectCollection('newsdata','comments');
+            $this->coll = $this->db->{'comments'};
+            $cursor = $this->coll->find(['oid' => $oid],['limit' => 100, 'projection' => ['_id' => 0, 'user' => 1, 'comment' => 1]]);
+            foreach ($cursor as $row) {
+                echo "<div class='box is-box'>";
+                foreach ($row as $key=>$col) {
+                    switch ($key) {
+                        case "user":
+                            echo "<h6 class='title is-6'>$col</h6>";
+                            break;
+                        case "comment":
+                            echo "<h6 class='subtitle is-6'>$col</h6>";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                echo "</div><br>";
+            }
         } catch (Exception $e) {
             die ("Error in fetchComments()...");
         }
@@ -241,9 +336,10 @@ require '/var/www/html/vendor/autoload.php';
         }
     }
 
-    public function storeComment() {
+    public function storeComment($user, $comment, $oid) {
         try {
             $this->coll = $this->conn->selectCollection('newsdata','comments');
+            $insertOneResult = $this->coll->insertOne(['user' => $user, 'comment' => $comment, 'oid' => $oid]);
         } catch (Exception $e) {
 
         }
@@ -255,8 +351,8 @@ require '/var/www/html/vendor/autoload.php';
      * 
      * Static function to convert BSON strins to PHP arrays.
      */
-    public static function toArray($bson) {
-        return json_decode(MongoDB\BSON\toJSON(MongoDB\BSON\fromPHP($bson)));
+    public function toArray($bson) {
+        return json_decode(MongoDB\BSON\toJSON(($bson)));
     }
 
  }

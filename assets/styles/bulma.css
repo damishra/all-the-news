@@ -329,7 +329,7 @@ th {
 }
 
 html {
-  background-color: white;
+  background-color: #363636;
   font-size: 16px;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -338,9 +338,9 @@ html {
   overflow-y: scroll;
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
-     -moz-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-          text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 article,
@@ -369,7 +369,7 @@ pre {
 }
 
 body {
-  color: #4a4a4a;
+  color: #fafafa;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -1129,6 +1129,7 @@ a.has-text-danger:hover, a.has-text-danger:focus {
 
 .is-block {
   display: block !important;
+  background-color: #363636;
 }
 
 @media screen and (max-width: 768px) {
@@ -1954,7 +1955,7 @@ fieldset[disabled] .button.is-light.is-inverted.is-outlined {
 }
 
 .button.is-dark {
-  background-color: #363636;
+  background-color: #3273dc;
   border-color: transparent;
   color: whitesmoke;
 }
@@ -4083,7 +4084,7 @@ fieldset[disabled] .select select:hover {
 }
 
 .label {
-  color: #363636;
+  color: #fafafa;
   display: block;
   font-size: 1rem;
   font-weight: 700;
@@ -5399,7 +5400,7 @@ a.tag:hover {
 }
 
 .subtitle {
-  color: #4a4a4a;
+  color: #fafafa;
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.25;
@@ -5416,6 +5417,7 @@ a.tag:hover {
 
 .subtitle.is-1 {
   font-size: 3rem;
+  color: white;
 }
 
 .subtitle.is-2 {
@@ -5436,6 +5438,7 @@ a.tag:hover {
 
 .subtitle.is-6 {
   font-size: 1rem;
+  color: black;
 }
 
 .subtitle.is-7 {
@@ -10523,3 +10526,5 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 /*# sourceMappingURL=bulma.css.map */
+
+.is-block {}
